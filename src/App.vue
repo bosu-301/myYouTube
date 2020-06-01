@@ -1,9 +1,10 @@
 <template>
-  <div class="container">
-    <div class="row" id="input">
+  <div class="" style="background-color:rgb(250,250,250);">
+    <div class="row w-100 mb-3" id="input">
       <SearchBar @input-search="onInputChange"/>
     </div>
-    <div class="row">
+
+    <div class="row" style="">
       <div class="col-8" id="video">
 
       </div>
