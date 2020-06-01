@@ -5,10 +5,11 @@
     </button>
 
     <a class="navbar-brand h-100 align-self-start p-0" href="#"><img src="../../public/youtubePremium.png" alt="" style="height:40px;"></a>
-    <form class="col form-inline my-2 my-md-0 align-self-start">
-      <input class="form-control w-50" type="search" placeholder="Search" aria-label="Search" @keypress.enter="onInput">
+    <!-- 원래 여기 아래 검색창을 div가 아니라 form 으로 감쌌었는데 그러니까 페이지가 refresh된다. 조심하자 -->
+    <div class="col form-inline my-2 my-md-0 align-self-start">
+      <input class="form-control w-50" type="search" placeholder="Search" aria-label="Search" v-model="input" @keypress.enter="onInput">
       <button class="btn d-inline" style="width:38px;" @click="onInput"><i class="fas fa-search"></i></button>
-    </form>
+    </div>
 
     <div class="navbar-collapse collapse" id="navberYoutube" style="">
       <ul class="navbar-nav mr-auto">
@@ -37,14 +38,27 @@
 <script>
 export default {
   name: 'SearchBar',
+  data() {
+    return {
+      input: ''
+    }
+  },
   methods: {
-    onInput(event) {
+    onInput() {
       // 위로 이벤트와 값을 쏜다
 
-      this.$emit('input-search', event.target.value)
+      this.$emit('input-search', this.input)
       // event.target.value = ''
     }
-  }
+  },
+  beforeMount() {
+      window.addEventListener("beforeunload", event => {
+        if (!this.isEditing) return
+        event.preventDefault()
+        // Chrome requires returnValue to be set.
+        event.returnValue = ""
+      })
+    }
 }
 </script>
 
