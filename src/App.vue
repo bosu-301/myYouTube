@@ -5,11 +5,11 @@
     </div>
 
     <div class="row" style="">
-      <div class="col-8" id="video">
-
+      <div class="col-8" id="videodetail">
+        <VideoDetail :selectVideo="selectVideo"/>
       </div>
-      <div class="col-4" id="relatedList">
-        <VideoList :videos="videos" />
+      <div class="col-4" id="videolist">
+        <VideoList :videos="videos" @video-select="onVideoSelect" />
       </div>
     </div>
     
@@ -19,10 +19,14 @@
 <script>
 import SearchBar from "./components/searchBar.vue"
 import VideoList from "./components/VideoList.vue"
-
+import VideoDetail from "./components/VideoDetail.vue"
 import axios from 'axios'
 
-const API_KEY = 'AIzaSyAZtCqcVablP3Q8Z5fWMXr-qeLnoxPr538'
+const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+
+// 임시키
+// const TMP_API_KEY = process.env.VUE_APP_YOUTUBE_TMP_API_KEY
+
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 
@@ -31,11 +35,13 @@ export default {
   components: {
     SearchBar,
     VideoList,
+    VideoDetail,
   },
   data() {
     return {
       inputValue: '',
-      videos: []
+      videos: [],
+      selectVideo: {},
     }
   },
   methods: {
@@ -53,6 +59,10 @@ export default {
       }).then(res => {
         this.videos = res.data.items
       }).catch(err => console.error(err))
+    },
+    onVideoSelect(selectVideo) {
+      this.selectVideo = selectVideo
+      
     },
   },
 }
