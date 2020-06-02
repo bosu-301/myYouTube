@@ -6,7 +6,7 @@
 
     <div class="row" style="">
       <div class="col-8" id="videodetail">
-        <VideoDetail :selectVideo="selectVideo"/>
+        <VideoDetail :video="selectVideo"/>
       </div>
       <div class="col-4" id="videolist">
         <VideoList :videos="videos" @video-select="onVideoSelect" />
@@ -24,8 +24,6 @@ import axios from 'axios'
 
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 
-// 임시키
-// const TMP_API_KEY = process.env.VUE_APP_YOUTUBE_TMP_API_KEY
 
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
@@ -55,6 +53,7 @@ export default {
           part: 'snippet',
           type: 'video',
           q: this.inputValue,
+          maxResults: 10,
         }
       }).then(res => {
         this.videos = res.data.items

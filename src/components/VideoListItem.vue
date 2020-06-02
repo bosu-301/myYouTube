@@ -1,6 +1,7 @@
 <template>
   <li class="video_list_item" @click="onVideoSelect">
-    <img :src="video.snippet.thumbnails.medium.url" alt="">
+    <!-- computed에서 간소화시켜 가져옴 -->
+    <img :src="thumbnailUrl" alt="">
     <hr>
   </li>
 </template>
@@ -15,7 +16,12 @@ export default {
     onVideoSelect() {
       this.$emit('video-select', this.video)
     }
-  }
+  },
+  computed: {
+    thumbnailUrl() {
+      return this.video.snippet.thumbnails.medium.url
+    }
+  },
 }
 </script>
 
