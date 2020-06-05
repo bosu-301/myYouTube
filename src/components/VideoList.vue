@@ -1,12 +1,11 @@
 <template>
   <div>
-    <ul>
+    <ul class="ml-0">
       <videoListItem 
         @video-select="onVideoSelect"
         :video="video" 
         v-for="video in videos" 
         :key="video.etag" 
-        class="d-block" 
       />
     </ul>
   </div>

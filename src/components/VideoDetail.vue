@@ -1,7 +1,10 @@
 <template>
   <div class="ml-5">
-    
-    <videoPlayer v-if="video" :videoId="videoId" />
+    <videoPlayer v-if="video" :videoId="videoId" class="mb-4"/>
+    <h5>{{video.snippet.title}}</h5>
+    <br>
+    <p>조회수 xx ㆍ{{ video.snippet.publishTime }}</p>
+    <hr>
   </div>
 </template>
 

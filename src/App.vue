@@ -4,11 +4,11 @@
       <SearchBar @input-search="onInputChange"/>
     </div>
 
-    <div class="row" style="">
-      <div class="col-8" id="videodetail">
-        <VideoDetail :video="selectVideo"/>
+    <div class="row justify-content-center" style="">
+      <div class="col-lg-8 col-12 pr-0" id="videodetail">
+        <VideoDetail v-if="selectVideo" :video="selectVideo"/>
       </div>
-      <div class="col-4" id="videolist">
+      <div class="col-lg-4 col-10 pl-0" id="videolist">
         <VideoList :videos="videos" @video-select="onVideoSelect" />
       </div>
     </div>
@@ -56,6 +56,13 @@ export default {
           maxResults: 10,
         }
       }).then(res => {
+        //가져온 res를 반복돌면서 깨지는부분 정리
+        res.data.items.forEach(item => {
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(item.snippet.title, 'text/html')
+          item.snippet.title = doc.body.innerText
+        })
+
         this.videos = res.data.items
       }).catch(err => console.error(err))
     },
